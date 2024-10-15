@@ -1,0 +1,2 @@
+# Finsight
+Minor project 
