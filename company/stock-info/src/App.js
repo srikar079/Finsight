@@ -48,7 +48,8 @@ function App() {
     const options = {
       method: 'GET',
       headers: {
-        'x-api-key': 'sk-live-V2ChUuxoU33fN9zrWszRipWFAr16OovDR3a7DEIC'
+        'x-api-key': `${process.env.REACT_APP_API_KEY}` ,
+        'authDomain': `${process.env.REACT_APP_AUTH_DOMAIN}`
       }
     };
 
