@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const industries = [
-  'Automobile', 'Chemical', 'OilAndGas', 'AutoComponent', 'cement', 'hi', 'business_process_management_companies_and_IT', 'Metals'
+  'Automobile', 'Chemical', 'OilAndGas', 'AutoComponent', 'Cement' , 'Business_process_management_companies_and_IT'
 ];
 
 const IndustryButtons = () => {
