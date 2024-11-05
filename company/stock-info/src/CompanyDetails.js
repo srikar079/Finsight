@@ -1,14 +1,7 @@
+// src/CompanyDetails.js
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardContent } from './components/ui/card';
-import IndustryButtons from './IndustryButtons';
-import CompanyDetails from './CompanyDetails';
-import AutoComponent from './components/industry/AutoComponent';
-import Chemical from './components/industry/Chemical';
-import Automobile from './components/industry/AutoMobile';
-import OilAndGas from './components/industry/OilAndGas';
-import Cement from './components/industry/Cement';
-import BusinessProcessManagementAndIT from './components/industry/BusinessProcessManagementAndIT';
 
 const RenderArray = ({ data }) => {
   if (!data || !Array.isArray(data)) return null;
@@ -47,19 +40,19 @@ const RenderObject = ({ data }) => {
   );
 };
 
-const IndustryDetails = () => {
-  const { industryName } = useParams();
+const CompanyDetails = () => {
+  const { company } = useParams();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const url = `https://stock.indianapi.in/stock?name=${industryName}`;
+    const url = `https://stock.indianapi.in/stock?name=${company}`;
     const options = {
       method: 'GET',
       headers: {
         'x-api-key': 'sk-live-V2ChUuxoU33fN9zrWszRipWFAr16OovDR3a7DEIC',
-        'authDomain': 'https://stock.indianapi.in/',
+        'authDomain': 'https://stock.indianapi.in/'
       }
     };
 
@@ -70,14 +63,8 @@ const IndustryDetails = () => {
           throw new Error(`Error: ${response.status} ${response.statusText}`);
         }
         const result = await response.json();
-        
-        const { 
-          financials, 
-          stockFinancialData, 
-          initialStockFinancialData, 
-          ...restData 
-        } = result;
-        
+
+        const { financials, stockFinancialData, initialStockFinancialData, ...restData } = result;
         setData(restData);
       } catch (err) {
         setError(err.message);
@@ -87,19 +74,20 @@ const IndustryDetails = () => {
     };
 
     fetchData();
-  }, [industryName]);
+  }, [company]);
 
-  if (loading) return <div className="text-center">Loading data...</div>;
-  if (error) return <div className="text-center text-red-500">Error: {error}</div>;
+  if (loading) return <p>Loading data...</p>;
+  if (error) return <p>Error fetching data: {error}</p>;
 
   return (
     <div className="max-w-6xl mx-auto p-4">
       <Card>
         <CardHeader>
-          <CardTitle>{industryName} Industry Details</CardTitle>
+          <CardTitle>Stock Information for {data?.companyName}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-6">
+            {/* Basic Information */}
             <section>
               <h2 className="text-xl font-semibold mb-2">Basic Information</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -116,12 +104,16 @@ const IndustryDetails = () => {
                 </div>
               </div>
             </section>
+
+            {/* Company Profile */}
             <section>
               <h2 className="text-xl font-semibold mb-2">Company Profile</h2>
               <div className="bg-gray-50 p-4 rounded-lg">
                 <p>{data?.companyProfile?.companyDescription}</p>
               </div>
             </section>
+
+            {/* Risk Meter */}
             <section>
               <h2 className="text-xl font-semibold mb-2">Risk Assessment</h2>
               <div className="bg-gray-50 p-4 rounded-lg">
@@ -129,12 +121,16 @@ const IndustryDetails = () => {
                 <p><span className="font-medium">Standard Deviation:</span> {data?.riskMeter?.stdDev?.toFixed(2) || 'N/A'}</p>
               </div>
             </section>
+
+            {/* Shareholding Pattern */}
             <section>
               <h2 className="text-xl font-semibold mb-2">Shareholding Pattern</h2>
               <div className="bg-gray-50 p-4 rounded-lg">
                 <RenderArray data={data?.shareholding} />
               </div>
             </section>
+
+            {/* Future Expiry Dates */}
             <section>
               <h2 className="text-xl font-semibold mb-2">Future Expiry Dates</h2>
               <div className="bg-gray-50 p-4 rounded-lg">
@@ -148,21 +144,4 @@ const IndustryDetails = () => {
   );
 };
 
-function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<IndustryButtons />} />
-        <Route path="/industry/:industry/:company" element={<CompanyDetails />} />
-        <Route path="/industry/AutoComponent" element={<AutoComponent />} />
-        <Route path="/industry/Chemical" element={<Chemical />} />
-        <Route path="/industry/Automobile" element={<Automobile />} />
-        <Route path="/industry/OilAndGas" element={<OilAndGas />} />
-        <Route path="/industry/Cement" element={<Cement />} />
-        <Route path="/industry/business_process_management_companies_and_IT" element={<BusinessProcessManagementAndIT />} />
-      </Routes>
-    </Router>
-  );
-}
-
-export default App;
+export default CompanyDetails;
