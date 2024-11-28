@@ -1,4 +1,3 @@
-// src/CompanyDetails.js
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardContent } from './components/ui/card';
@@ -51,7 +50,7 @@ const CompanyDetails = () => {
     const options = {
       method: 'GET',
       headers: {
-        'x-api-key': 'sk-live-V2ChUuxoU33fN9zrWszRipWFAr16OovDR3a7DEIC',
+        'x-api-key': 'sk-live-l23ogwq2ypm3fkyutimxyVwVIGWYDSsAsAfjvplR',
         'authDomain': 'https://stock.indianapi.in/'
       }
     };
