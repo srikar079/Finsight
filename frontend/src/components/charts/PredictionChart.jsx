@@ -13,18 +13,19 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 const PredictionChart = ({ query, data }) => {
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
-      const baseValue =
-        data?.predictions[0]?.[`predicted_${query.toLowerCase()}`];
-      const currentValue = payload[0].value;
-      const growthPercentage = baseValue
-        ? (((currentValue - baseValue) / baseValue) * 100).toFixed(1)
+      const baseYearValue = data?.predictions[0]?.[`predicted_gva`];
+      const currentYearValue = payload[0].value;
+      const growthPercentage = baseYearValue
+        ? (((currentYearValue - baseYearValue) / baseYearValue) * 100).toFixed(
+            1
+          )
         : 0;
 
       return (
         <div className="bg-white p-4 border rounded-lg shadow-lg">
           <p className="font-semibold text-gray-800">Year: {label}</p>
           <p className="text-emerald-600">
-            {query}: ${currentValue.toFixed(2)}M
+            {query}: ${currentYearValue.toFixed(2)}M
           </p>
           <p className="text-sm text-gray-500 mt-1">
             {growthPercentage}% growth from 2025
@@ -34,9 +35,9 @@ const PredictionChart = ({ query, data }) => {
     }
     return null;
   };
-
+  console.log(query);
   return (
-    <Card className="w-full">
+    <Card className="!w-full">
       {!data && (
         <CardHeader>
           <CardTitle>No Record</CardTitle>
@@ -76,7 +77,7 @@ const PredictionChart = ({ query, data }) => {
                   <Legend />
                   <Line
                     type="monotone"
-                    dataKey={`predicted_${query?.toLowerCase()}`}
+                    dataKey={`predicted_gva`}
                     stroke="#059669"
                     strokeWidth={3}
                     dot={{

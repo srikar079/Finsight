@@ -19,19 +19,15 @@ const Render_Industries_data = ({ request }) => {
   const data_keys = Object.keys(JSON.parse(data_set));
   console.log(data);
   console.log(error);
-
-  // const { data_set } = data || industries_data[request];
-  // const { years } = !error ? data_set : JSON.parse(data_set);
-  // const data_keys = !error ? data_set : Object.keys(JSON.parse(data_set));
-  // console.log(data);
-  // console.log(error)
-
   return (
-    <div>
+    <>
       {isPending && <Spinner className="m-auto" />}
       {!isPending && (
         <>
-          <Predict_Compare_Industry industries={JSON.parse(data_set)} />
+          <Predict_Compare_Industry
+            industries={JSON.parse(data_set)}
+            data_keys={data_keys}
+          />
           <Render_Table_data
             headers={years}
             body={data_keys}
@@ -39,7 +35,7 @@ const Render_Industries_data = ({ request }) => {
           />
         </>
       )}
-    </div>
+    </>
   );
 };
 

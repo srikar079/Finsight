@@ -9,7 +9,8 @@ import { prediction_data } from "@/components/CONSTANT/data_store";
 import DialogModal from "@/components/DialogModal";
 import Btn from "../UiElements/Btn";
 
-const Predict_Compare_Industry = ({ industries }) => {
+const Predict_Compare_Industry = ({ data_keys }) => {
+  console.log(data_keys);
   const { isPending, data, post, error } = usePost(
     `${import.meta.env.VITE_Finsight_URL}/Prediction/`,
     "predict_company"
@@ -23,10 +24,10 @@ const Predict_Compare_Industry = ({ industries }) => {
   const [isOpen, setIsOpen] = useState(false);
   const query = useQuery("task");
   const search = useQuery("query");
-  const handleChange = (data, placeholder) => {
+  const handleChange = (value, placeholder) => {
     if (!query) return;
     if (query === "predict") {
-      setBody((prev) => ({ ...prev, [placeholder]: data }));
+      setBody((prev) => ({ ...prev, [placeholder]: value }));
     }
   };
 
@@ -36,7 +37,7 @@ const Predict_Compare_Industry = ({ industries }) => {
       return;
     }
     post({
-      data_set: query,
+      data_set: search,
       selected_industry: body.Industry,
       n_periods: body.Years,
     });
@@ -52,7 +53,7 @@ const Predict_Compare_Industry = ({ industries }) => {
     setIsOpen(value);
   };
 
-  const res = data || prediction_data[body.Industry];
+  const res = data;
   console.log(res);
 
   return (
@@ -72,7 +73,7 @@ const Predict_Compare_Industry = ({ industries }) => {
           <div className="flex gap-3">
             <SelectIndustryPrediction
               placeholder={"Industry"}
-              industries={industries}
+              industries={data_keys}
               handleChange={handleChange}
             />
             <SelectIndustryPrediction
@@ -101,7 +102,8 @@ const Predict_Compare_Industry = ({ industries }) => {
         )}
       </div>
       <DialogModal handleOpenChange={handleOpenChange} isOpen={isOpen}>
-        <PredictionChart query={search} data={res} />
+        {isPending && <Spinner className="text-sm m-2" />}
+        {!isPending && <PredictionChart query={search} data={res} />}
       </DialogModal>
     </>
   );

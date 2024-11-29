@@ -12,7 +12,7 @@ const Industry_Analysis = () => {
     { component: "Export", value: "export" },
   ];
   return (
-    <div>
+    <>
       <Tabs defaultValue={search || "gva"} className="w-full">
         <TabsList className="w-fit bg-transparent">
           {menu.map((item) => (
@@ -33,7 +33,7 @@ const Industry_Analysis = () => {
           </TabsContent>
         ))}
       </Tabs>
-    </div>
+    </>
   );
 };
 

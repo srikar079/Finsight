@@ -7,16 +7,14 @@ import { Eye, MoveUpRight } from "lucide-react";
 import { Spinner } from "@/utils/utils";
 const RenderCompanyDetails = () => {
   const searchParams = useQuery("query");
-  const { data, isLoading, error } = useFetch(
+  const { isLoading, data, error } = useFetch(
     `${
       import.meta.env.VITE_STOCK_INDIAN_API_BASE_URL
     }stock?name=${searchParams}`,
     "companys"
   );
-  console.log(searchParams);
-  if (isLoading) return <Spinner className=" m-auto" />;
-  console.log(error);
-  console.log(error.message);
+  if (isLoading) return <Spinner className="m-auto" />;
+  console.log(error?.message);
   if (error) return <h1>Ops! Server error</h1>;
 
   return (

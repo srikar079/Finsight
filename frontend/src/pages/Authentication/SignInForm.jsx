@@ -73,7 +73,9 @@ const SignInForm = () => {
       </FormGroup>
       <Btn
         txt={!isSubmitting && "Login"}
-        className="w-full"
+        className={`${
+          isSubmitting && "cursor-not-allowed bg-gray-400 hover:bg-gray-400"
+        } w-full`}
         disabled={isSubmitting}
       >
         {isSubmitting && <Spinner />}

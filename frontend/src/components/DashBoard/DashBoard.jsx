@@ -13,7 +13,7 @@ import UsePreventBack from "@/hooks/UsePreventBack";
 const DashBoard = ({ children }) => {
   UsePreventBack();
   return (
-    <SidebarProvider className="">
+    <SidebarProvider className="!overflow-x-hidden">
       <Sidebar variant="inset">
         {/* SidebarHeader */}
         <SidebarHeader className="border-b px-6 py-4">
@@ -31,7 +31,7 @@ const DashBoard = ({ children }) => {
         <SideBarFooter />
       </Sidebar>
       {/* MAIN CONTENT */}
-      {children}
+      <div className="border-2 w-full overflow-x-auto">{children}</div>
     </SidebarProvider>
   );
 };

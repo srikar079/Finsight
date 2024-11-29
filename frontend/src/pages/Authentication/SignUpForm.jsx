@@ -29,6 +29,11 @@ const SignUpForm = () => {
       res && login(email, password);
     } catch (error) {
       console.log(error);
+      toaster({
+        data: [{ msg: error.message }],
+        state: "error",
+        title: "SignUp Failed",
+      });
     }
   };
   /* Handle Login */
@@ -143,7 +148,12 @@ const SignUpForm = () => {
           />
         </FormGroup>
       </DualColumns>
-      <Btn txt={!isSubmitting && "SignUp"} className="w-full mt-1">
+      <Btn
+        txt={!isSubmitting && "SignUp"}
+        className={`${
+          isSubmitting && "cursor-not-allowed bg-gray-400 hover:bg-gray-400"
+        } w-full mt-1`}
+      >
         {isSubmitting && <Spinner />}
       </Btn>
     </Form>
